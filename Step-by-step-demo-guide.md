@@ -228,7 +228,7 @@ openssl ecparam -genkey -name secp384r1 -out server.key
 
 2. Create a configuration file for the client certificate signing request:
 
-> **Note:** The OU (Organizational Unit) value is important as it will be used in the IAM trust policy. In this example, we're using **"Innovation"**, but you can customize it to your needs.
+> **Note:** The OU (Organizational Unit) value is important as it will be used in the IAM trust policy. In this example, we're using **"WorkshopOrgUnit"**, but you can customize it to your needs.
 
 ```bash
 cat > server_request.config << 'EOF'
@@ -239,7 +239,7 @@ distinguished_name = dn
 C = US
 O = Acme
 CN = Acme.com
-OU = Innovation
+OU = WorkshopOrgUnit
 EOF
 ```
 
@@ -281,7 +281,7 @@ In this section, you'll set up IAM Roles Anywhere in the AWS Management Console.
 2. In the left navigation pane, choose **Roles**.
 3. Choose **Create role**.
 4. For trusted entity type, select **Custom trust policy**.
-5. Replace the default policy with the following (replace **`Innovation`** with the OU value you used in your client certificate):
+5. Replace the default policy with the following (replace **`WorkshopOrgUnit`** with the OU value you used in your client certificate):
 
 ```json
 {
@@ -299,7 +299,7 @@ In this section, you'll set up IAM Roles Anywhere in the AWS Management Console.
             ],
             "Condition": {
                 "StringEquals": {
-                    "aws:PrincipalTag/x509Subject/OU": "Innovation"
+                    "aws:PrincipalTag/x509Subject/OU": "WorkshopOrgUnit"
                 }
             }
         }
